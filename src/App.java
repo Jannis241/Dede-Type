@@ -245,6 +245,23 @@ public class App {
         
     }
 
+    public void markCurrentWord(String input){
+        try{
+            for (Word word : wordsCurrentlyUsed){
+                int alrdyTypeLetter = input.length();
+                String matchingWordLetter = word.content.substring(0,alrdyTypeLetter);
+                if (input.equals(matchingWordLetter)){
+                    JLabel label = wordToLabel.get(word);
+                    
+                }
+            }
+        }
+        catch (Exception e){
+            System.err.println("<ERROR> Cannot find matching letters..");
+        }
+
+    }
+
 
     public static void main(String[] args) throws Exception {
         System.out.println("--------- <Dede Type> ---------");
@@ -263,15 +280,17 @@ public class App {
         
 
         double counter = 0;
-        double difficulty = 5;
+        double difficulty = 7;
  
         while (true){
             String input = dedeType.textField.getText();
+            
             if (input != null){
+                input = input.replaceAll(" ", "");
+                dedeType.markCurrentWord(input);
                 for (Word word : wordsCurrentlyUsed) {
-                    if (input.equals(word.content + " ")){
+                    if (input.equals(word.content)){
                         System.out.println("<Remove> removed " + input +"..");
-                        //String actualWord = input.substring(0, input.length() - 1); // das leerzeichen am ende entfernen damit man das richtige Wort löschen kann
                         dedeType.removeWord(word);
                         dedeType.textField.setText("");
                         score += 1;
@@ -293,8 +312,8 @@ public class App {
             counter += difficulty * deltaTime;
             
             if (counter >= 10){
-                speed += .5;
-                difficulty += .1;
+                speed += .75;
+                difficulty += .05;
                 dedeType.addWords(1);
                 counter = 0;
                 System.out.println("<Data> Speed: " + speed + " | Difficulty: " + difficulty);
