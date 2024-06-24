@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-
 class Word{
 	String content;
 	int lane;
@@ -13,7 +12,6 @@ class Word{
 		lane = l;
 		xPos = 0;
 		desiredX = 0;
-		
 	}
 }
 @SuppressWarnings("unused")
@@ -32,18 +30,18 @@ public class App {
     static ArrayList<Word> wordsCurrentlyUsed;
     ArrayList<String> wordStringsCurrentlyUsed;
     ArrayList<String> wordList;
-    int minAbstand;
-    
-    static int xCoordLabel;
     
     static int score;
-    
+
     int maxWordsPerLane;
+    int minAbstand;
+
     App(){
     	minAbstand = 200;
         maxWordsPerLane = 3;
+
         score = 0;
-        xCoordLabel = 0;
+        
         wordsCurrentlyUsed = new ArrayList<>();
         wordStringsCurrentlyUsed = new ArrayList<>();
 
@@ -75,7 +73,6 @@ public class App {
         textField.setFont(myFont);
         textField.setEditable(true);
         
-
         scoreText = new JLabel();
         scoreText.setFont(myFont);
         scoreText.setHorizontalAlignment(SwingConstants.CENTER);
@@ -189,12 +186,6 @@ public class App {
             else{
                 System.out.println("<ERROR> No valid Word / Lane combination found!!!");
             }
-
-
-
-
-
-
         }
     }
 
@@ -238,14 +229,12 @@ public class App {
                 String matchingWordLetter = word.content.substring(0,alrdyTypeLetter);
                 if (input.equals(matchingWordLetter)){
                     JLabel label = wordToLabel.get(word);
-                    
                 }
             }
         }
         catch (Exception e){
             System.err.println("<ERROR> Cannot find matching letters..");
         }
-
     }
 
     public static void main(String[] args) throws Exception {
