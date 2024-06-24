@@ -238,7 +238,7 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("--------- <Dede Type> ---------");
+        System.out.println("--------- < Dede Type > ---------");
         System.out.println("<Start> Starting window..");
 
         long lastTime = System.nanoTime();
@@ -256,7 +256,7 @@ public class App {
  
         while (true){
             String input = dedeType.textField.getText();
-            
+
             if (input != null){
                 input = input.replaceAll(" ", "");
                 dedeType.markCurrentWord(input);
