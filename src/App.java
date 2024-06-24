@@ -25,7 +25,7 @@ public class App {
     Map<Word, JLabel> wordToLabel;
     Map<Integer, Integer> laneToCoordMap;
     Map<Double, Integer> coordToLaneMap;
-    Map<Word, Integer> wordsOnLane;
+    Map<Integer, Integer> wordsOnLane;
     
     Font myFont = new Font("Arial",Font.BOLD,30);
     Font wordFont = new Font("Arial", Font.PLAIN, 20);
@@ -41,7 +41,7 @@ public class App {
     
     int maxWordsPerLane;
     App(){
-    	minAbstand = 100;
+    	minAbstand = 200;
         maxWordsPerLane = 3;
         score = 0;
         xCoordLabel = 0;
@@ -68,6 +68,12 @@ public class App {
         coordToLaneMap.put(230.0, 3);
         coordToLaneMap.put(300.0, 4);
         coordToLaneMap.put(370.0, 5);
+
+        wordsOnLane.put(1, 0);
+        wordsOnLane.put(2, 0);
+        wordsOnLane.put(3, 0);
+        wordsOnLane.put(4, 0);
+        wordsOnLane.put(5, 0);
 
         frame = new JFrame("Fufu Type");
         frame.setSize(1000,600);
@@ -107,8 +113,10 @@ public class App {
         frame.add(testLabel);
         wordToLabel.put(word, testLabel);
         
+
         wordsCurrentlyUsed.add(word);
         wordStringsCurrentlyUsed.add(text);
+        wordsOnLane.put(lane, wordsOnLane.get(lane) + 1);
     }
 
 
@@ -131,53 +139,78 @@ public class App {
         wordList.add("Haus");
         wordList.add("Hose");
     }
-    public void addWords(int num){
-    	
-    	
-    	
-        ArrayList<Integer> lanesBeingUsed = new ArrayList<>();
-        for (int i = 0; i < num; i++){
-            boolean found = false;
 
-            while(!found){
-                Random rand1 = new Random();
-                Collections.shuffle(wordList, rand1);
-                String choosenWord = wordList.get(0);
-                Random rand2 = new Random();
-                int lane = (int)Math.ceil(5 * rand2.nextDouble());
-                
-            	if (wordStringsCurrentlyUsed.size() == 0) {
-                    System.out.println("<creation> "+choosenWord + " got created in Lane " + lane);
-                    found = true;
-                    createWord(choosenWord, lane);
-            	}
-                
-                // check ob das word schon genutzt wird und ob noch platz in der Lane ist
-            	else if (!wordStringsCurrentlyUsed.contains(choosenWord) && wordsOnLane.get(lane) <= maxWordsPerLane){
-                	
-                	// gucken ob der mindestabstand ist
-                	
-                	// ->> bei start muss noch gefixt werden weil da ja der mindestabstand niht ist + index error falls liste leer ist (es noch keine wörter gibt)
-
-                     	for (Word word : wordsCurrentlyUsed) {
-                    		if (word.lane == lane) { // falls das wort auf der selben lane ist
-                    			if (word.xPos >= minAbstand) {
-                                    System.out.println("<creation> "+choosenWord + " got created in Lane " + lane);
-                                    found = true;
-                                    createWord(choosenWord, lane);
-                    			}
-                    		}
-                    	}
-
-     
-                	
-
-                   
-                    
-                }
-    
-                
+    public void startWords(){
+        ArrayList<Integer> usedLanes = new ArrayList<>();
+        while (true){
+            Random rand1 = new Random();
+            Collections.shuffle(wordList, rand1);
+            String choosenWord = wordList.get(0);
+            Random rand2 = new Random();
+            int lane = (int)Math.ceil(5 * rand2.nextDouble());
+            if (!usedLanes.contains(lane)){
+                usedLanes.add(lane);
+                createWord(choosenWord, lane);
+                System.out.println("<start word creation> "+choosenWord + " got created in Lane " + lane);
+                break;
             }
+        }
+    }
+
+    public void addWords(int num){
+        System.out.println("<Creator> creating " +num + " word(s)..");
+
+        for (int numIndex = 0; numIndex < num; numIndex++){
+            // 1. valides Wort finden
+            ArrayList<String> validWords = new ArrayList<>();
+
+            for (String word : wordList){
+                if (!wordStringsCurrentlyUsed.contains(word)){
+                    validWords.add(word);
+                }
+            }
+
+            // 2. valide Lane finden
+            ArrayList<Integer> validLanes = new ArrayList<>();
+            for (int lane = 1; lane <= 5; lane++){
+                boolean validAbstand = true;
+                if (wordsOnLane.get(lane) <= maxWordsPerLane){
+                    for (Word word : wordsCurrentlyUsed){
+                        if (word.lane == lane){
+                            if (word.xPos < minAbstand){
+                                validAbstand = false;
+                            }
+                        }
+                    }
+                }
+                if (validAbstand){
+                    validLanes.add(lane);
+                }
+            }
+
+            System.out.println("<Creator> Found " + validLanes.size() + " valid lanes.");
+            System.out.println("<Creator> Found " + validWords.size() + " valid words.");
+
+            if (validWords.size() != 0 && validLanes.size() != 0){
+                Random rand1 = new Random();
+                Collections.shuffle(validWords, rand1);
+                String choosenWord = validWords.get(0);
+                
+                Random rand2 = new Random();
+                Collections.shuffle(validLanes, rand2);
+                Integer choosenLane = validLanes.get(0);
+    
+                createWord(choosenWord, choosenLane);
+            }
+            else{
+                System.out.println("<ERROR> No valid Word / Lane combination found!!!");
+            }
+
+
+
+
+
+
         }
     }
 
@@ -193,12 +226,11 @@ public class App {
         }
 
         wordToLabel.remove(word);
+        wordsOnLane.put(word.lane, wordsOnLane.get(word.lane) + -1);
 
     }
 
     public void update(double dt, double speed){
-
-        scoreText.setText("Score: " + score);
         double distanceDiff = speed * dt; // die distanz die verändert werden muss
         
         
@@ -213,18 +245,11 @@ public class App {
                 frame.dispose();
             }
             wordToLabel.get(word).setLocation(finalX, wordToLabel.get(word).getY());
+            word.xPos = finalX;
         }
         
         
-        
-        // updaten wie viele wörter auf einer lane sind        
-        wordsOnLane.clear();
-        
-        for (Word word : wordsCurrentlyUsed) {
-        	int lane = (int) coordToLaneMap.get(word.xPos);
-        	wordsOnLane.put(lane, wordsOnLane.get(lane) + 1);
-        	
-        }
+
         
     }
 
@@ -239,22 +264,24 @@ public class App {
         App dedeType = new App();
         System.out.println("<Init> Initializing app..");
         dedeType.generadeWords();
-        dedeType.addWords(4);
+        dedeType.startWords();
+
+        double speed = 75.0;
+        
         
 
-        int counter = 0;
+        double counter = 0;
+        double difficulty = 1;
 
         while (true){
             String input = dedeType.textField.getText();
             if (input != null){
                 for (Word word : wordsCurrentlyUsed) {
                     if (input.equals(word.content +" ")){
-                        System.out.println("");
-                        System.out.println("<remove> "+input + "got correctly typed.. -> removing it..");
-                        String actualWord = input.substring(0, input.length() - 1); // das leerzeichen am ende entfernen damit man das richtige Wort löschen kann
+                        System.out.println("<Remove> removed " + input +"..");
+                        //String actualWord = input.substring(0, input.length() - 1); // das leerzeichen am ende entfernen damit man das richtige Wort löschen kann
                         dedeType.removeWord(word);
                         dedeType.textField.setText("");
-                        dedeType.addWords(1);
                         score += 1;
                         break;
                     }
@@ -270,14 +297,17 @@ public class App {
             
             lastTime = currentTime;
 
-            dedeType.update(deltaTime, 75.0);
-            counter += 1;
+            dedeType.update(deltaTime, speed);
+            counter += difficulty;
             
-            if (counter >= 1e15 * deltaTime){
-                System.out.println("added new word..");
+            if (counter >= 1e7){
+                speed += 1;
+                difficulty += 0.1;
                 dedeType.addWords(1);
                 counter = 0;
+                System.out.println("<Data> Speed: " + speed + " | Difficulty: " + difficulty);
             }
+
              
             
         }
