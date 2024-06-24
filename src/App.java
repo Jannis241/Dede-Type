@@ -16,7 +16,7 @@ class Word{
 		
 	}
 }
-
+@SuppressWarnings("unused")
 public class App {
     JFrame frame;
     JTextField textField;
