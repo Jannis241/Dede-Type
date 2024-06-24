@@ -95,7 +95,7 @@ public class App {
         testLabel.setText(text);
         testLabel.setBounds(0, yCoord, 1000, 50);
         frame.add(testLabel);
-        
+
         wordToLabel.put(word, testLabel);
         wordsCurrentlyUsed.add(word);
         wordStringsCurrentlyUsed.add(text);
@@ -238,7 +238,7 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("--------- <DedeType > ---------");
+        System.out.println("--------- <DedeType> ---------");
         System.out.println("<Start> Starting window..");
 
         long lastTime = System.nanoTime();
