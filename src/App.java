@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+hallo
+
 
 class Word{
 	String content;
