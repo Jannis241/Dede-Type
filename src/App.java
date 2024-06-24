@@ -14,6 +14,11 @@ class Word{
 		desiredX = 0;
 	}
 }
+
+class Test{
+    String test;
+}
+
 @SuppressWarnings("unused")
 public class App {
     JFrame frame;
