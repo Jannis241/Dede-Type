@@ -47,11 +47,9 @@ public class App {
         wordsCurrentlyUsed = new ArrayList<>();
         wordStringsCurrentlyUsed = new ArrayList<>();
 
-        
         wordList = new ArrayList<>();
         wordToLabel = new HashMap<>();
         wordsOnLane = new HashMap<>();
-        
         laneToCoordMap = new HashMap<>();
 
         laneToCoordMap.put(1, 90);
@@ -85,8 +83,6 @@ public class App {
         scoreText.setBounds(0, 20, 1000, 25);
         scoreText.setText("Score: " + score);
     
-
-
         frame.add(scoreText);
         frame.add(textField);
         frame.setLayout(null);
@@ -104,12 +100,10 @@ public class App {
         frame.add(testLabel);
         wordToLabel.put(word, testLabel);
         
-
         wordsCurrentlyUsed.add(word);
         wordStringsCurrentlyUsed.add(text);
         wordsOnLane.put(lane, wordsOnLane.get(lane) + 1);
     }
-
 
     public void generadeWords(){
         wordList.add("Adresse");
@@ -154,7 +148,6 @@ public class App {
         for (int numIndex = 0; numIndex < num; numIndex++){
             // 1. valides Wort finden
             ArrayList<String> validWords = new ArrayList<>();
-
             for (String word : wordList){
                 if (!wordStringsCurrentlyUsed.contains(word)){
                     validWords.add(word);
@@ -205,7 +198,6 @@ public class App {
         }
     }
 
-
     public void removeWord(Word word){
         wordsCurrentlyUsed.remove(word);
         wordStringsCurrentlyUsed.remove(word.content);
@@ -225,12 +217,10 @@ public class App {
         scoreText.setText("Score: " + score);
         double distanceDiff = speed * dt; // die distanz die verändert werden muss
         
-        
         for (Word word : wordsCurrentlyUsed){
             double desiredX = word.desiredX + distanceDiff; // was das finale x sein müsste ohne runden
             
             word.desiredX = desiredX;
-            
             
             int finalX = (int)Math.round(desiredX); // das finale x wird mit runden ausgerechnet
             if (finalX >= 1000){
@@ -238,11 +228,7 @@ public class App {
             }
             wordToLabel.get(word).setLocation(finalX, wordToLabel.get(word).getY());
             word.xPos = finalX;
-        }
-        
-        
-
-        
+        } 
     }
 
     public void markCurrentWord(String input){
@@ -262,7 +248,6 @@ public class App {
 
     }
 
-
     public static void main(String[] args) throws Exception {
         System.out.println("--------- <Dede Type> ---------");
         System.out.println("<Start> Starting window..");
@@ -277,8 +262,6 @@ public class App {
 
         double speed = 50.0;
         
-        
-
         double counter = 0;
         double difficulty = 7;
  
@@ -299,10 +282,6 @@ public class App {
                 }
             }
 
-
-
-
-
             long currentTime = System.nanoTime();
             deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
             
@@ -318,9 +297,6 @@ public class App {
                 counter = 0;
                 System.out.println("<Data> Speed: " + speed + " | Difficulty: " + difficulty);
             }
-
-             
-            
         }
     }
 }
