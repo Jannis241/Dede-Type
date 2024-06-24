@@ -124,7 +124,7 @@ public class App {
         wordList.add("Schule");
         wordList.add("Tastatur");
         wordList.add("Bett");
-        wordList.add("Glas");mm
+        wordList.add("Glas");
         wordList.add("Wasser");
         wordList.add("Fahrrad");
         wordList.add("Haus");
@@ -269,7 +269,7 @@ public class App {
             String input = dedeType.textField.getText();
             if (input != null){
                 for (Word word : wordsCurrentlyUsed) {
-                    if (input.equals(word.content  )){
+                    if (input.equals(word.content + " ")){
                         System.out.println("<Remove> removed " + input +"..");
                         //String actualWord = input.substring(0, input.length() - 1); // das leerzeichen am ende entfernen damit man das richtige Wort löschen kann
                         dedeType.removeWord(word);
