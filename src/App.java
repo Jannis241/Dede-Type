@@ -230,56 +230,52 @@ public class App {
 
 
     public static void main(String[] args) throws Exception {
-
-        
-    
-        System.out.println("github test");
-        System.out.println("github test");
-        System.out.println("github test");
-        System.out.println("github test");
-        System.out.println("github test"); 
-        System.out.println("--------- <Fufu Type> ---------");
+        System.out.println("--------- <Dede Type> ---------");
         System.out.println("<Start> Starting window..");
 
         long lastTime = System.nanoTime();
         double deltaTime;
 
-        App fufuType = new App();
+        App dedeType = new App();
         System.out.println("<Init> Initializing app..");
-        fufuType.generadeWords();
-        fufuType.addWords(4);
+        dedeType.generadeWords();
+        dedeType.addWords(4);
         
 
         int counter = 0;
 
         while (true){
-            String input = fufuType.textField.getText();
+            String input = dedeType.textField.getText();
             if (input != null){
                 for (Word word : wordsCurrentlyUsed) {
                     if (input.equals(word.content +" ")){
                         System.out.println("");
                         System.out.println("<remove> "+input + "got correctly typed.. -> removing it..");
                         String actualWord = input.substring(0, input.length() - 1); // das leerzeichen am ende entfernen damit man das richtige Wort löschen kann
-                        fufuType.removeWord(word);
-                        fufuType.textField.setText("");
-                        fufuType.addWords(1);
+                        dedeType.removeWord(word);
+                        dedeType.textField.setText("");
+                        dedeType.addWords(1);
                         score += 1;
                         break;
                     }
                 }
             }
 
+
+
+
+
             long currentTime = System.nanoTime();
             deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
             
             lastTime = currentTime;
 
-            fufuType.update(deltaTime, 75.0);
+            dedeType.update(deltaTime, 75.0);
             counter += 1;
             
             if (counter >= 1e15 * deltaTime){
                 System.out.println("added new word..");
-                fufuType.addWords(1);
+                dedeType.addWords(1);
                 counter = 0;
             }
              
