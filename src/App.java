@@ -258,7 +258,7 @@ public class App {
         dedeType.generadeWords();
         dedeType.startWords();
 
-        double speed = 75.0;
+        double speed = 50.0;
         
         
 
@@ -293,8 +293,8 @@ public class App {
             counter += difficulty * deltaTime;
             
             if (counter >= 10){
-                speed += 1;
-                difficulty += .250;
+                speed += .5;
+                difficulty += .1;
                 dedeType.addWords(1);
                 counter = 0;
                 System.out.println("<Data> Speed: " + speed + " | Difficulty: " + difficulty);
