@@ -24,7 +24,6 @@ public class App {
     
     Map<Word, JLabel> wordToLabel;
     Map<Integer, Integer> laneToCoordMap;
-    Map<Double, Integer> coordToLaneMap;
     Map<Integer, Integer> wordsOnLane;
     
     Font myFont = new Font("Arial",Font.BOLD,30);
@@ -54,7 +53,6 @@ public class App {
         wordsOnLane = new HashMap<>();
         
         laneToCoordMap = new HashMap<>();
-        coordToLaneMap = new HashMap<>();
 
         laneToCoordMap.put(1, 90);
         laneToCoordMap.put(2, 160);
@@ -62,13 +60,6 @@ public class App {
         laneToCoordMap.put(4, 300);
         laneToCoordMap.put(5, 370);
         
-        
-        coordToLaneMap.put(90.0, 1);
-        coordToLaneMap.put(160.0, 2);
-        coordToLaneMap.put(230.0, 3);
-        coordToLaneMap.put(300.0, 4);
-        coordToLaneMap.put(370.0, 5);
-
         wordsOnLane.put(1, 0);
         wordsOnLane.put(2, 0);
         wordsOnLane.put(3, 0);
@@ -133,7 +124,7 @@ public class App {
         wordList.add("Schule");
         wordList.add("Tastatur");
         wordList.add("Bett");
-        wordList.add("Glas");
+        wordList.add("Glas");mm
         wordList.add("Wasser");
         wordList.add("Fahrrad");
         wordList.add("Haus");
@@ -231,6 +222,7 @@ public class App {
     }
 
     public void update(double dt, double speed){
+        scoreText.setText("Score: " + score);
         double distanceDiff = speed * dt; // die distanz die verändert werden muss
         
         
@@ -271,13 +263,13 @@ public class App {
         
 
         double counter = 0;
-        double difficulty = 1;
-
+        double difficulty = 5;
+ 
         while (true){
             String input = dedeType.textField.getText();
             if (input != null){
                 for (Word word : wordsCurrentlyUsed) {
-                    if (input.equals(word.content +" ")){
+                    if (input.equals(word.content  )){
                         System.out.println("<Remove> removed " + input +"..");
                         //String actualWord = input.substring(0, input.length() - 1); // das leerzeichen am ende entfernen damit man das richtige Wort löschen kann
                         dedeType.removeWord(word);
@@ -298,11 +290,11 @@ public class App {
             lastTime = currentTime;
 
             dedeType.update(deltaTime, speed);
-            counter += difficulty;
+            counter += difficulty * deltaTime;
             
-            if (counter >= 1e7){
+            if (counter >= 10){
                 speed += 1;
-                difficulty += 0.1;
+                difficulty += .250;
                 dedeType.addWords(1);
                 counter = 0;
                 System.out.println("<Data> Speed: " + speed + " | Difficulty: " + difficulty);
