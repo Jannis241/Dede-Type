@@ -2,25 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Word{
 	String content;
 	int lane;
@@ -33,6 +14,20 @@ class Word{
 		desiredX = 0;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @SuppressWarnings("unused")
 public class App {
