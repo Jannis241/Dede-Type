@@ -239,6 +239,7 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
+        System.out.println("test of python update funktioniert!!");
         System.out.println("--------- <DedeType> ---------");
         System.out.println("<Start> Starting window..");
 
