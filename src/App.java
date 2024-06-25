@@ -239,6 +239,17 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
+
+
+
+
+
+
+
+
+
+
+        
         System.out.println("--------- <DedeType> ---------");
         System.out.println("<Start> Starting window..");
 
