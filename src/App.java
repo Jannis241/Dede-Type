@@ -125,44 +125,6 @@ public class App {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
     public void startWords(){
         ArrayList<Integer> usedLanes = new ArrayList<>();
         while (true){
