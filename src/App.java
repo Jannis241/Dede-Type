@@ -123,6 +123,46 @@ public class App {
         wordList.add("Hose");
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
     public void startWords(){
         ArrayList<Integer> usedLanes = new ArrayList<>();
         while (true){
